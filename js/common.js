@@ -36,108 +36,38 @@ function upload( file, kode, directory, submit ) {
 var waitModal;
 var kodeAplikasi;
 
-/**
- * Pesan yang akan ditampilkan ketika terjadi suatu proses.
+/*
+ * Pilih berdasarkan 2 pilihan.
  */
-var message = {
+function choose( option1, option2 ) {
+
+	if ( option1 )
+		return option1;
 	
-	/**
-	 * Sistem tidak menampilkan apapun.
-	 */
-	empty: function() { },
-		
-	/**
-	 * Proses menghasilkan pesan yang perlu ditampilkan.
-	 */
-	write: function( msg ) {
-		
-		alert( msg );
-		
-	},
-		
-	/**
-	 * Proses berhasil.
-	 * Lakukan aksi berdasarkan tipe message.
-	 */
-	success: function(result) {
-
-		page.change( $( '#message' ), '');
+	return copyOf( option2 );
 	
-		switch ( result.tipe ) {
+};
+
+function changeChar( str, oldChar, newChar ) {
+
+	// message.writeLog( 'Not All Done' );
+	while ( str.match( oldChar ) )
+		str = str.replace( "/", "-" );
 		
-			case "SUCCESS": console.log( "Proses SUCCESS" );
-					page.change( $( '#message' ), 
-						'<div id="success-alert" class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Selamat!</strong> ' + result.message + '</div>');
-				break;
-			case "ENTITY": console.log( "Entity Set" );
-					page.change( $( '#message' ), 
-						'<div id="success-alert" class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Selamat!</strong> ' + result.message + '</div>');
-				break;
-			case "LIST": console.log( "List Set" );
-					page.change( $( '#message' ), 
-						'<div id="success-alert" class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Selamat!</strong> ' + result.message + '</div>');
-				break;
-			case "OBJECT": console.log( "Object Set" );
-					page.change( $( '#message' ), 
-						'<div id="success-alert" class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Selamat!</strong> ' + result.message + '</div>');
-				break;
-			case "MESSAGE": 
-					page.change( $( '#message' ), 
-						'<div id="warning-alert" class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Pesan!</strong> ' + result.message + '</div>');
-				break;
-			case "ERROR": 
-					page.change( $( '#message' ), 
-						'<div id="error-alert" class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Error!</strong> ' + result.message + '</div>');
-				break;
-			default: console.log( "Tipe result tidak dikenali : " + result.tipe );
-		}
+	return str;
+};
+
+function showDivWithClass( div, cls ) {
+	$( '.' + cls ).each( function( index ) {
+		$( this ).hide();
+	} );
 	
-	},
-		
-	/**
-	 * Secara default menampilkan pesan koneksi error ketika terjadi kesalahan.
-	 */
-	error: function() {
+	$( '#' + div ).show();
+};
 
-		alert( 'Tidak bisa melakukan koneksi ke server' );
-		
-	},
-		
-	/**
-	 * Tampilkan error. Digunakan saat proses debugging.
-	 */
-	writeError: function( jqXHR, textStatus, errorThrown ) {
+function copyOf( object ) {
 
-		alert( 'Error : ' + textStatus + ' - ' + errorThrown );
-		
-	},
-		
-	/**
-	 * Tampilkan log pada browser console.
-	 */
-	writeLog: function( log ) {
-
-		console.log( "LOG : " + log );
-
-	},
-		
-	/**
-	 * Tampilkan error pada browser console.
-	 */
-	log: function( jqXHR, textStatus, errorThrown ) {
-
-		console.log( 'LOG: Error : ' + textStatus + ' - ' + errorThrown );
-		
-	},
-	
-	/**
-	 * Tampilkan pesan pada browser console.
-	 */
-	logResult: function( result ) {
-		
-		console.log( result.message );
-
-	}
+	return $.extend( {}, object );
 	
 };
 
@@ -389,6 +319,111 @@ function rest( link, projectName) {
 		    });
 		}
 	};
+};
+
+/**
+ * Pesan yang akan ditampilkan ketika terjadi suatu proses.
+ */
+var message = {
+	
+	/**
+	 * Sistem tidak menampilkan apapun.
+	 */
+	empty: function() { },
+		
+	/**
+	 * Proses menghasilkan pesan yang perlu ditampilkan.
+	 */
+	write: function( msg ) {
+		
+		alert( msg );
+		
+	},
+		
+	/**
+	 * Proses berhasil.
+	 * Lakukan aksi berdasarkan tipe message.
+	 */
+	success: function(result) {
+
+		page.change( $( '#message' ), '');
+	
+		switch ( result.tipe ) {
+		
+			case "SUCCESS": console.log( "Proses SUCCESS" );
+					page.change( $( '#message' ), 
+						'<div id="success-alert" class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Selamat!</strong> ' + result.message + '</div>');
+				break;
+			case "ENTITY": console.log( "Entity Set" );
+					page.change( $( '#message' ), 
+						'<div id="success-alert" class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Selamat!</strong> ' + result.message + '</div>');
+				break;
+			case "LIST": console.log( "List Set" );
+					page.change( $( '#message' ), 
+						'<div id="success-alert" class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Selamat!</strong> ' + result.message + '</div>');
+				break;
+			case "OBJECT": console.log( "Object Set" );
+					page.change( $( '#message' ), 
+						'<div id="success-alert" class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Selamat!</strong> ' + result.message + '</div>');
+				break;
+			case "MESSAGE": 
+					page.change( $( '#message' ), 
+						'<div id="warning-alert" class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Pesan!</strong> ' + result.message + '</div>');
+				break;
+			case "ERROR": 
+					page.change( $( '#message' ), 
+						'<div id="error-alert" class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><strong>Error!</strong> ' + result.message + '</div>');
+				break;
+			default: console.log( "Tipe result tidak dikenali : " + result.tipe );
+		}
+	
+	},
+		
+	/**
+	 * Secara default menampilkan pesan koneksi error ketika terjadi kesalahan.
+	 */
+	error: function() {
+
+		alert( 'Tidak bisa melakukan koneksi ke server' );
+		
+	},
+		
+	/**
+	 * Tampilkan error. Digunakan saat proses debugging.
+	 */
+	writeError: function( jqXHR, textStatus, errorThrown ) {
+
+		alert( 'Error : ' + textStatus + ' - ' + errorThrown );
+		
+	},
+		
+	/**
+	 * Tampilkan log pada browser console.
+	 */
+	writeLog: function( log ) {
+
+		console.log( "LOG : " + log );
+
+	},
+		
+	/**
+	 * Tampilkan error pada browser console.
+	 */
+	log: function( jqXHR, textStatus, errorThrown ) {
+
+		console.log( 'LOG: Error : ' + textStatus + ' - ' + errorThrown );
+		
+	},
+	
+	/**
+	 * Tampilkan pesan pada browser console.
+	 */
+	logResult: function( result ) {
+		
+		console.log( result.message );
+
+	}
+	
 };
 
 /**
@@ -1176,24 +1211,6 @@ var printer = {
 	}
 };
 
-/*
- * Pilih berdasarkan 2 pilihan.
- */
-function choose( option1, option2 ) {
-
-	if ( option1 )
-		return option1;
-	
-	return copyOf( option2 );
-	
-};
-
-function copyOf( object ) {
-
-	return $.extend( {}, object );
-	
-};
-
 var setupPage = function( list, container ) {
 
 	if ( !list )
@@ -1231,15 +1248,6 @@ var tableSet = function( list, pageNumber) {
 		first: first,
 		last: last
 	};
-};
-
-function changeChar( str, oldChar, newChar ) {
-
-	// message.writeLog( 'Not All Done' );
-	while ( str.match( oldChar ) )
-		str = str.replace( "/", "-" );
-		
-	return str;
 };
 
 /*
