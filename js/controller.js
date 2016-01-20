@@ -748,7 +748,7 @@ $( document ).ready( function () {
 		var awal = myDate.fromDatePicker( $( '#form-rekap-sppd-tanggal-awal' ).val() );
 		var akhir = myDate.fromDatePicker( $( '#form-rekap-sppd-tanggal-akhir' ).val() );
 		
-		printer.submitPost( target + '/ehrm/suratTugas/rekap/' + awal + '/to/' + akhir + '/cetak', [], 'GET' );
+		printer.submitPost( target + '/ehrm/suratTugas/rekap/' + awal.getFormattedString() + '/to/' + akhir.getFormattedString() + '/cetak', [], 'GET' );
 		
 	});
 	
