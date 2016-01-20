@@ -745,9 +745,10 @@ $( document ).ready( function () {
 
 	$( document ).on( 'click', '#btn-rekap-sppd-cetak', function() {
 
-		var tahun = $( '#form-rekap-sppd-tahun' ).val();
+		var awal = myDate.fromDatePicker( $( '#form-rekap-sppd-tanggal-awal' ).val() );
+		var akhir = myDate.fromDatePicker( $( '#form-rekap-sppd-tanggal-akhir' ).val() );
 		
-		printer.submitPost( target + '/ehrm/suratTugas/rekap/tahun/' + tahun + '/cetak', [], 'GET' );
+		printer.submitPost( target + '/ehrm/suratTugas/rekap/' + awal + '/to/' + akhir + '/cetak', [], 'GET' );
 		
 	});
 	
