@@ -747,7 +747,7 @@ $( document ).ready( function () {
 
 		var tahun = $( '#form-rekap-sppd-tahun' ).val();
 		
-		printer.submitPost( target + '/ehrm/sppd/rekap/tahun/' + tahun + '/cetak', [], 'GET' );
+		printer.submitPost( target + '/ehrm/suratTugas/rekap/tahun/' + tahun + '/cetak', [], 'GET' );
 		
 	});
 	
