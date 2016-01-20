@@ -743,12 +743,21 @@ $( document ).ready( function () {
 		
 	});
 
+	$( document ).on( 'click', '#btn-rekap-spt-cetak', function() {
+
+		var awal = myDate.fromDatePicker( $( '#form-rekap-spt-tanggal-awal' ).val() );
+		var akhir = myDate.fromDatePicker( $( '#form-rekap-spt-tanggal-akhir' ).val() );
+		
+		printer.submitPost( target + '/ehrm/suratTugas/rekap/' + awal.getDatePickerString() + '/to/' + akhir.getDatePickerString() + '/cetak', [], 'GET' );
+		
+	});
+
 	$( document ).on( 'click', '#btn-rekap-sppd-cetak', function() {
 
 		var awal = myDate.fromDatePicker( $( '#form-rekap-sppd-tanggal-awal' ).val() );
 		var akhir = myDate.fromDatePicker( $( '#form-rekap-sppd-tanggal-akhir' ).val() );
 		
-		printer.submitPost( target + '/ehrm/suratTugas/rekap/' + awal.getDatePickerString() + '/to/' + akhir.getDatePickerString() + '/cetak', [], 'GET' );
+		printer.submitPost( target + '/ehrm/sppd/rekap/' + awal.getDatePickerString() + '/to/' + akhir.getDatePickerString() + '/cetak', [], 'GET' );
 		
 	});
 	
