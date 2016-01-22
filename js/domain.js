@@ -954,6 +954,7 @@ var sptDomain = {
 			$( '#form-spt-jumlah-hari' ).val( suratTugas.jumlahHari );
 			$( '#form-spt-tujuan' ).val( suratTugas.tujuan );
 			$( '#form-spt-maksud' ).val( suratTugas.maksud );
+			$( '#form-spt-tanggal' ).val( suratTugas.tanggal );
 		},
 		
 		loadPemegangTugas: function( id ) {

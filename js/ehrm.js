@@ -605,14 +605,15 @@ var kalendarRestAdapter = {
 
 var suratTugasRestAdapter = {
 	
-	add: function( id, nomor, jumlahHari, tujuan, maksud, callback ) {
+	add: function( id, nomor, jumlahHari, tujuan, maksud, tanggal, callback ) {
 
 		var suratTugas = {
 			id: id,
 			nomor: nomor,
 			jumlahHari: jumlahHari,
 			tujuan: tujuan,
-			maksud: maksud
+			maksud: maksud,
+			tanggal: tanggal
 		};
 		
 		ehrmRestAdapter.call( '/suratTugas/langsung', suratTugas, 'POST',

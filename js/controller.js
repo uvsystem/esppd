@@ -540,8 +540,9 @@ $( document ).ready( function () {
 		var jumlahHari = $( '#form-spt-jumlah-hari' ).val();
 		var tujuan = $( '#form-spt-tujuan' ).val();
 		var maksud = $( '#form-spt-maksud' ).val();
+		var tanggal = $( '#form-spt-tanggal' ).val();
 	
-		suratTugasRestAdapter.add( id, nomor, jumlahHari, tujuan, maksud, sptDomain.success );
+		suratTugasRestAdapter.add( id, nomor, jumlahHari, tujuan, maksud, tanggal, sptDomain.success );
 	} );
 
 	$( document ).on( 'click', '#btn-simpan-pemegang-tugas', function() {
@@ -618,50 +619,6 @@ $( document ).ready( function () {
 		});
 	} );
 
-
-
-	// Aplikasi Controller
-	$( document ).on( 'click', '#btn-aplikasi-tambah', function() {
-	
-		aplikasiDomain.currentId = 0;
-		$( '#form-aplikasi-kode' ).val( '' );
-		$( '#form-aplikasi-nama' ).val( '' );
-		$( '#form-aplikasi-url' ).val( '' );
-		
-	} );
-	
-	$( document ).on( 'click', '#btn-simpan-aplikasi', function() {
-
-		var id = aplikasiDomain.currentId;
-		var kode = $( '#form-aplikasi-kode' ).val();
-		var nama = $( '#form-aplikasi-nama' ).val();
-		var url = $( '#form-aplikasi-url' ).val();
-		
-		aplikasiRestAdapter.add( id, kode, nama, url, aplikasiDomain.success );
-		
-	} );
-
-	$( document ).on( 'click', '#btn-simpan-operator', function() {
-
-		var aplikasi = storage.getById( aplikasiDomain, aplikasiDomain.currentId );
-		var nip = $( '#form-operator-nip' ).val();
-		var role = aplikasiDomain.roleOperator;;
-
-		if ( role == 'ADMIN' ) {
-			aplikasiRestAdapter.addAdmin( aplikasi.kode, nip, aplikasiDomain.success );
-		} if ( role == 'OPERATOR' ) {
-			aplikasiRestAdapter.addOperator( aplikasi.kode, nip, aplikasiDomain.success );
-		}
-	} );
-
-	$( document ).on( 'change', '#form-operator-nip', function() {
-		
-		var nip = $( '#form-operator-nip' ).val();
-		var pegawai = pegawaiDomain.getByNip( nip );
-		$( '#form-operator-nama' ).val( pegawai.nama );
-		
-	} );
-	
 	
 	// Cari Handler.
 	$( document ).on( 'focus', '#search', function() {
@@ -700,12 +657,6 @@ $( document ).ready( function () {
 				unitKerjaDomain.load( result.list );
 			});
 			
-		} else if ( halaman == jabatanDomain.nama ) {
-		
-			jabatanRestAdapter.search( kataKunci, function( result ) {
-				jabatanDomain.load( result.list );
-			});
-			
 		} else if ( halaman == sptDomain.nama ) {
 		
 			suratTugasRestAdapter.search( kataKunci, function( result ) {
@@ -716,14 +667,6 @@ $( document ).ready( function () {
 		
 			sppdRestAdapter.search( kataKunci, function( result ) {
 				sppdDomain.load( result.list );
-			});
-			
-		} else if ( halaman == absenDomain.nama ) {
-			
-			absenDomain.searchBy = true;
-		
-			absenRestAdapter.search( kataKunci, function( result ) {
-				absenDomain.load( result.list );
 			});
 			
 		} else {
