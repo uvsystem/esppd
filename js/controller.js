@@ -624,7 +624,7 @@ $( document ).ready( function () {
 	$( document ).on( 'focus', '#search', function() {
 	
 		$( '#search' ).attr( 'placeholder', 'Masukan Kata Kunci' );
-		page.change( $( '#table' ), '' );
+		// page.change( $( '#table' ), '' );
 		page.change( $( '#message' ), '');
 		
 	} );
